@@ -1,0 +1,72 @@
+
+
+<% if params[:search_genre] == "book" %>
+
+   <h1>Bookers Search</h1>
+
+		<table class="table table-hover table-inverse">
+			<thead>
+				<tr>
+					<th></th>
+					<th>Title</th>
+					<th>Opinion</th>
+					<th colspan="3"></th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<% @books.each do |book| %>
+				<tr>
+					<td>
+						<%= attachment_image_tag book.user, :profile_image, format:'lpeg', size:"50x50", fallback: "no-image-mini.jpg" %>						
+					</td>
+					<td><%= link_to book.title, book, class: "book_#{book.id}" %></td>
+					<td><%= book.body %></td>
+				</tr>
+				<% end %>
+			</tbody>
+		</table>
+
+<% elsif params[:search_genre] == "user" %>
+     
+    <h1>Users Search</h1>
+
+ 
+		<table class="table">
+		<thead>
+			<tr>
+				<th>image</th>
+				<th>name</th>
+				<th colspan="3"></th>
+			</tr>
+		</thead>
+
+		<tbody>
+			<% if user_signed_in? %>
+
+			<% @users.each do |user| %>
+
+			<tr>
+				<td><%= attachment_image_tag(user, :profile_image, size:"50x50", fallback: "no-image-mini.jpg") %></td>
+				<td><%= user.name%></td>
+				<td><p><%= "フォロー数: #{user.follower.count}" %></p></td>
+				<td><p><%= "フォロワー数: #{user.followed.count}" %></p></td>
+				<td>
+				<p>
+		        <% unless user == current_user %>
+				<% if current_user.following?(user) %>
+				<%= link_to 'フォロー外す', unfollow_path(user.id), method: :DELETE %>
+				<% else %>
+				<%= link_to 'フォローする', follow_path(user.id), method: :POST %>
+				<% end %>
+				<% end %>
+
+				</p>
+				</td>
+				<td><%= link_to "Show", user, class: "user_#{user.id}" %></td>
+			</tr>
+			<% end %>
+			<% end %>
+		</tbody>
+		</table>
+<% end %>

@@ -53,6 +53,11 @@ class UsersController < ApplicationController
     render 'show_follower'
   end
 
+  def search
+    #Viewのformで取得したパラメータをモデルに渡す
+    @users = User.search(params[:id])
+  end
+
   private
   def user_params
   	params.require(:user).permit(:name, :introduction, :profile_image)

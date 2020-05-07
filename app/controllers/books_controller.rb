@@ -72,6 +72,13 @@ end
     redirect_to books_path
   end
 end
+  def search
+  #Viewのformで取得したパラメータをモデルに渡す
+  method = params[:search_method]
+  word = params[:search_word]
+  @books = Book.search(params[:search])
+  end
+
 
   private
 

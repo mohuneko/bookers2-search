@@ -1,0 +1,16 @@
+<div class="container">
+<div class="row">
+ <div class="col-xs-12">
+ <div class="body search">
+
+ <% if user_signed_in? %>
+
+		<%= form_tag(searchs_search_path,:method => 'get') do %>
+		  <%= text_field_tag :search %>
+		  <%= select(@search_content, :search_genre,[["User","user"],["Book","book"]]) %>
+		  <%= select(@search_content, :search_method, [["完全一致","perfect_match"],["前方一致","forward_match"],["後方一致","backward_match"],["部分一致","partial_match"]]) %>
+			<%= submit_tag 'Search' %>
+    <% end %>
+ <% end %>
+
+</div>
